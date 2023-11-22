@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Reader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 80%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Sign Reader</h1>
+<input type="text" id="linkInput" placeholder="Paste the link here">
+<button onclick="readSign()">Read Sign</button>
+<p id="signContent"></p>
+
+<script>
+    function readSign() {
+        // Get the link from the input box
+        const link = document.getElementById('linkInput').value;
+
+        // Make a GET request to the provided link
+        fetch(link)
+            .then(response => response.json())
+            .then(data => {
+                // Extract the sign content from the response
+                const signContent = data?.sign || 'Sign content not available';
+
+                // Display the sign content in the HTML
+                document.getElementById('signContent').textContent = `Sign Content: ${signContent}`;
+            })
+            .catch(error => {
+                console.error('Error reading sign:', error);
+                document.getElementById('signContent').textContent = 'Error reading sign';
+            });
+    }
+</script>
+
+</body>
+</html>
